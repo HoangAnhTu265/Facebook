@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Facebook.Models.User>
+
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+   
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.User1.UserName)
+            </th>
+            <th></th>*@
+        </tr>
+    
+    @foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        @if (item.Gender == true)
+        {
+            <td>
+                Male
+            </td>
+        }
+        else
+        {
+            <td>
+                Female
+            </td>
+        }
+    <td>
+        @*@Html.ActionLink("Edit", "Edit", new { id = item.Friend_Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Friend_Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Friend_Id })*@
+        <input type="submit" value="Add Friend" />
+        <button onclick="emoji2(@item.User_Id,1)">Like</button>
+        <button onclick="emoji2(@item.User_Id,0)">Dislike</button>
+        @Html.ActionLink("Details", "Details", new { id = item.User_Id })
+    </td>
+    </tr>
+    }
+    
+    </table>
+    <script>
+        var url = "/Friends/Like";
+        function emoji2(idLiked, Status) {
+            /*  var url2 = url + "?a=" + userEmoji;*/
+            /*idUserLike, int idLiked, int Status*/
+        var url4 = url + "?a=" + 100 + "&idLiked=" + idLiked + "&Status=" + Status;
+            
+            alert(url4);
+            $.post(url4,
+                {
+
+                },
+                function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+        }
+    </script>
+

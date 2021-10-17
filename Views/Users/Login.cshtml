@@ -1,0 +1,40 @@
+﻿@model Facebook.Models.User
+
+@{
+    Layout = null;
+}
+
+
+<head>
+    <link href="@Url.Content("~/Content/mycss.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="login-box" style="top:2.9cm">
+    <div class="col-md-4">
+        <div class="card">
+            <div>
+                <h1 style="color:whitesmoke">Login</h1>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Login", "Users", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="user-box">
+                        @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+
+                    </div>
+                    <div class="user-box">
+                        @Html.PasswordFor(m => m.PassWord, new { @class = "form-control", @placeholder = "Password" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-primary" value="Login" />
+
+                        @Html.ActionLink("Register", "Register")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

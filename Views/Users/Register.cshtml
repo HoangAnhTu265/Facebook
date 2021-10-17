@@ -1,0 +1,107 @@
+﻿@model Facebook.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<head>
+    <link href="@Url.Content("~/Content/mycss.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Register", "Users", FormMethod.Post))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Register</div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        <div class="col-md-10">
+                            <div class="checkbox">
+
+                                <select class="form-control" id="Gender" name="Gender">
+                                    <option>Select Gender</option>
+                                    <option value="True">Male</option>
+                                    <option value="False">Female</option>
+                                </select>
+
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.WorkStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <select class="form-control" id="WorkStatus" name="WorkStatus">
+                                        <option>Select status</option>
+                                        <option value="True">Student</option>
+                                        <option value="False">Employees</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.WorkStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName)
+                            @Html.TextBoxFor(m => m.UserName, "", new { @class = "form-control", @placeholder = "UserName" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PassWord)
+                            @Html.PasswordFor(m => m.PassWord, new { @class = "form-control", @placeholder = "PassWord" })
+                            @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confim Password" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address)
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                            @if (ViewBag.error != null)
+                            {
+                                <span class="badge badge-danger">@ViewBag.error</span>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-danger" value="Register" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
