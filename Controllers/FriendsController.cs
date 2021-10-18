@@ -14,8 +14,9 @@ namespace Facebook.Controllers
     public class FriendsController : Controller
     {
         private DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
-        String sql_con = @"Data Source=ADMIN\SQLEXPRESS;Initial Catalog=DemoSMS_Onlien;Integrated Security=True";
-        SqlConnection con;
+        static String sql_con = @"Data Source=ADMIN\SQLEXPRESS;Initial Catalog=DemoSMS_Onlien;Integrated Security=True";
+        SqlConnection con = new SqlConnection(sql_con);
+      
         // GET: Friends
         public ActionResult Index()
         {
@@ -125,16 +126,16 @@ namespace Facebook.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
+        
+        //[HttpPost]
         public String Like(int idLiked, int Status)
         {
             //string b = a;
-            //int abc = 0;
+            int abc = 0;
 
             //bool emp = true;
 
-            con = new SqlConnection(sql_con);
+            
 
             String sql = "insert into Emoji values(@Sender, @Receiver, @Status)";
 

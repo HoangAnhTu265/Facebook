@@ -257,9 +257,6 @@ namespace Facebook.Controllers
 
             Session.Clear();
             return RedirectToAction("Login");
-
-            //Session.Abandon();
-            //return RedirectToAction("Login");
         }
 
         //create md5 string
