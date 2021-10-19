@@ -16,7 +16,7 @@ namespace Facebook.Controllers
         private DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
         static String sql_con = @"Data Source=ADMIN\SQLEXPRESS;Initial Catalog=DemoSMS_Onlien;Integrated Security=True";
         SqlConnection con = new SqlConnection(sql_con);
-      
+
         // GET: Friends
         public ActionResult Index()
         {
@@ -31,7 +31,7 @@ namespace Facebook.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user= db.Users.Find(id);
+            User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -126,32 +126,76 @@ namespace Facebook.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
         //[HttpPost]
         public String Like(int idLiked, int Status)
         {
             //string b = a;
-            int abc = 0;
-
-            //bool emp = true;
-
-            
-
-            String sql = "insert into Emoji values(@Sender, @Receiver, @Status)";
-
-            //User user = db.Users.Find(id);
-            //Friend friend = db.Friends.Find(id);
-
-            //int userId = db.Friends.Find(id).User.User_Id;
+            con.Open();
             var a = Session["UserID"];
 
-            SqlCommand command = new SqlCommand(sql, con);
-            command.Parameters.AddWithValue("@Sender", a);
-            command.Parameters.AddWithValue("@Receiver", idLiked);
-            command.Parameters.AddWithValue("@Status", Status);
 
-            con.Open();
-            command.ExecuteNonQuery();
+            //0 là dislike
+            //1 là like
+            //null là không có gì
+            //id là người dùng nhận like
+
+            if (Status == 1)
+            {
+                //var sqlLike = "Select * from Emoji where User_Sender = " + a + " And User_Receiver = " + idLiked + " And Status = " + 1;
+                var checkFalse = db.Emojis.Where(s => s.User_Sender == (int)a && s.User_Receiver == idLiked && s.Status == false).ToList();
+                var checkTrue = db.Emojis.Where(s => s.User_Sender == (int)a && s.User_Receiver == idLiked && s.Status == true).ToList();
+                if (checkTrue.Count() > 0)
+                {
+                    String sqlDislikeUpdate = "Update Emoji Set Status = 0 where User_Sender = " + a + " And User_Receiver = " + idLiked;
+                    SqlCommand commandLike = new SqlCommand(sqlDislikeUpdate, con);
+                    commandLike.ExecuteNonQuery();
+                }
+                else if (checkFalse.Count() > 0)
+                {
+                    String sqlLike = "Update Emoji Set Status = 1 where User_Sender = " + a + " And User_Receiver = " + idLiked;
+                    SqlCommand commandLike = new SqlCommand(sqlLike, con);
+                    commandLike.ExecuteNonQuery();
+                }
+                else
+                {
+                    String sql = "insert into Emoji values(@Sender, @Receiver, @Status)";
+                    SqlCommand command = new SqlCommand(sql, con);
+                    command.Parameters.AddWithValue("@Sender", a);
+                    command.Parameters.AddWithValue("@Receiver", idLiked);
+                    command.Parameters.AddWithValue("@Status", Status);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            else if (Status == 0)
+            {
+                var checkFalse = db.Emojis.Where(s => s.User_Sender == (int)a && s.User_Receiver == idLiked && s.Status == false).ToList();
+                var checkTrue = db.Emojis.Where(s => s.User_Sender == (int)a && s.User_Receiver == idLiked && s.Status == true).ToList();
+                //var likeToDislike = db.Emojis.Where(s => s.User_Sender == (int)a && s.User_Receiver == idLiked && s.Status == true).ToList();
+                if (checkFalse.Count() > 0)
+                {
+                    String sqlLike = "Update Emoji Set Status = 1 where User_Sender = " + a + " And User_Receiver = " + idLiked;
+                    SqlCommand commandLike = new SqlCommand(sqlLike, con);
+                    commandLike.ExecuteNonQuery();
+                }
+                else if(checkTrue.Count() > 0)
+                {
+                    String sqlLike = "Update Emoji Set Status = 0 where User_Sender = " + a + " And User_Receiver = " + idLiked;
+                    SqlCommand commandLike = new SqlCommand(sqlLike, con);
+                    commandLike.ExecuteNonQuery();
+                }
+                else
+                {
+                    String sql = "insert into Emoji values(@Sender, @Receiver, @Status)";
+                    SqlCommand command = new SqlCommand(sql, con);
+                    command.Parameters.AddWithValue("@Sender", a);
+                    command.Parameters.AddWithValue("@Receiver", idLiked);
+                    command.Parameters.AddWithValue("@Status", Status);
+
+                    command.ExecuteNonQuery();
+                }
+            }
             con.Close();
 
             return "abc";

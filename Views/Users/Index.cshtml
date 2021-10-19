@@ -22,6 +22,7 @@
                 <div class="card-body">
                     @if (Session["FullName"] != null)
                     {
+                        
                         <p>Name: @Session["FullName"].ToString()</p>
                         <p>Gender: @Session["Gender"].ToString()</p>
                         <p>WorkStatus: @Session["WorkStatus"].ToString()</p>

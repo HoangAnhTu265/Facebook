@@ -144,7 +144,7 @@ namespace Facebook.Controllers
             return View();
         }
 
-
+        static int a;
         SqlConnection con;
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -183,7 +183,7 @@ namespace Facebook.Controllers
                     Session["Address"] = data.FirstOrDefault().Address;
                     Session["DOB"] = data.FirstOrDefault().DOB;
                     Session["UserID"] = data.FirstOrDefault().User_Id;
-
+                    a = data.FirstOrDefault().User_Id;
                     Session["UserName"] = data.FirstOrDefault().UserName;
 
 
@@ -243,19 +243,21 @@ namespace Facebook.Controllers
         //Logout
         public ActionResult Logout()
         {
-            var data = db.Users;
+            var data = Session["User_Id"];
+            //var data = Session["Email"].ToString();
 
             con = new SqlConnection(sql_con);
-            String sql = "update Users set Status = @Status where User_Id =" + data.FirstOrDefault().User_Id;
+            //String sql = "update Users set Status = 'Logged Out' where Email = " + " ' " + data + " ' ";
+            String sql = "update Users set Status = 'Logged Out' where User_Id = " + a;
             SqlCommand command = new SqlCommand(sql, con);
 
-            command.Parameters.AddWithValue("@Status", "Logged Out");
+            //command.Parameters.AddWithValue("@Status", "Logged Out");
 
             con.Open();
             command.ExecuteNonQuery();
             con.Close();
 
-            Session.Clear();
+            //Session.Clear();
             return RedirectToAction("Login");
         }
 
