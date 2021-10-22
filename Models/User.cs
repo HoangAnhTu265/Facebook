@@ -11,9 +11,7 @@ namespace Facebook.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,21 +25,9 @@ namespace Facebook.Models
     
         public int User_Id { get; set; }
         public string UserName { get; set; }
-
-        [Display(Name = "PassWord")]
         public string PassWord { get; set; }
-
-        [NotMapped]
-        [Required]
-        [System.ComponentModel.DataAnnotations.Compare("PassWord")]
-        public string ConfirmPassword { get; set; }
-
         public string Email { get; set; }
-
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DOB { get; set; }
-
-
         public Nullable<bool> Gender { get; set; }
         public Nullable<bool> WorkStatus { get; set; }
         public string Address { get; set; }

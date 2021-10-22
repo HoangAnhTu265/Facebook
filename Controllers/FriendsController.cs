@@ -128,6 +128,23 @@ namespace Facebook.Controllers
         }
 
         //[HttpPost]
+        public String addFriend(int UserFriend_Id, string FriendName)
+        {
+            con.Open();
+            var a = Session["UserID"];
+
+            String sql = "insert into Friend values(@FriendName, @UserFriend_Id, @UserId,@Status)";
+            SqlCommand command = new SqlCommand(sql, con);
+            command.Parameters.AddWithValue("@FriendName", FriendName);
+            command.Parameters.AddWithValue("@UserFriend_Id", UserFriend_Id);
+            command.Parameters.AddWithValue("@UserId", a);
+            command.Parameters.AddWithValue("@Status", "null");
+            command.ExecuteNonQuery();
+
+            return "abc";
+        }
+
+        //[HttpPost]
         public String Like(int idLiked, int Status)
         {
             //string b = a;

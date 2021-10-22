@@ -50,11 +50,11 @@
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Friend_Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Friend_Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Friend_Id })*@
-                <input type="submit" value="Add Friend" />
+                @*<input type="submit" value="Add Friend" onclick="addFriend(@item.User_Id,@item.UserName)" />*@
+                @*<button id="addFriendBtn" onclick="addFriend(@item.User_Id,@item.UserName)">Add Friend</button>*@
+                <button id="addFriendBtn" onclick="addFriend(1, @("'"+item.UserName+"'"))">Add Friend</button>
 
-
-
-                <button id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
+                <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
                 <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
                 @Html.ActionLink("Details", "Details", new { id = item.User_Id })
             </td>
@@ -71,15 +71,36 @@
         /*  var url2 = url + "?a=" + userEmoji;*/
         /*idUserLike, int idLiked, int Status*/
         var ma = $("#mId").val();
-        alert("data là " + ma);
+        /*alert("data là " + ma);*/
         var url4 = url2 + "?idLiked=" + idLiked + "&Status=" + Status;
 
         alert(url4);
         $.get(url4, function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
+            /*alert("Data: " + data + "\nStatus: " + status);*/
         });
+
+        //change color button
+        //var x = document.getElementsByClassName('btnLike').style.backgroundColor = "blue";
+        //for (var i = 0; i < x.length; i++) {
+        //    x[i].style.backgroundColor = "#205e7a";
+        //}
     }
+    var urlFriend = "https://localhost:44315/Friends/addFriend";
+    function addFriend(UserFriend_Id, FriendName) {
+        alert("hello đây là function addfriend");
+        var url5 = urlFriend + "?UserFriend_Id=" + UserFriend_Id + "&FriendName=" + FriendName;
+        /*alert(url5)*/
+        $.get(url5, function (data, status) {
+            alert("data: " + data + "\nStatus: " + status);
+        })
+    }
+
+    //oke rồi đấy. vấn đề ở đây là em dùng hàm js addFriend(int, string)
+    //string trong js phải đặt trong "" hoặc ''
+    //nhưng bình thường ít ai dùng cách này trong c#, nó thường đẩy input vào controller xử lí rồi trả output về view
 </script>
+
+
 
 
 
