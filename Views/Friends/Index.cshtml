@@ -30,36 +30,49 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            @if (item.Gender == true)
-            {
-                <td>
-                    Male
-                </td>
-            }
-            else
-            {
-                <td>
-                    Female
-                </td>
-            }
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Friend_Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Friend_Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Friend_Id })*@
-                @*<input type="submit" value="Add Friend" onclick="addFriend(@item.User_Id,@item.UserName)" />*@
-                @*<button id="addFriendBtn" onclick="addFriend(@item.User_Id,@item.UserName)">Add Friend</button>*@
-                <button id="addFriendBtn" onclick="addFriend(1, @("'"+item.UserName+"'"))">Add Friend</button>
+        if (item.UserName == Session["UserName"].ToString())
+        {
+            <tr style="display:none"></tr>
+        }
+        else
+        {
+            <tr>
+                @*<span> đây là item username @item.UserName</span>
+                    <br />
+                    <span>đây là session @Session["UserName"].ToString()</span>
+                    <br />*@
 
-                <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
-                <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
-                @Html.ActionLink("Details", "Details", new { id = item.User_Id })
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                @if (item.Gender == true)
+                {
+                    <td>
+                        Male
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Female
+                    </td>
+                }
+
+
+
+                <td>
+
+                    <button id="addFriendBtn" onclick="addFriend(1, @("'" + item.UserName + "'"))">Add Friend</button>
+
+                    <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
+                    <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
+                    @Html.ActionLink("Details", "Details", new { id = item.User_Id })
+                </td>
+
+            </tr>
+        }
     }
+
 
 
 </table>
@@ -95,9 +108,9 @@
         })
     }
 
-    //oke rồi đấy. vấn đề ở đây là em dùng hàm js addFriend(int, string)
-    //string trong js phải đặt trong "" hoặc ''
-    //nhưng bình thường ít ai dùng cách này trong c#, nó thường đẩy input vào controller xử lí rồi trả output về view
+                //oke rồi đấy. vấn đề ở đây là em dùng hàm js addFriend(int, string)
+                //string trong js phải đặt trong "" hoặc ''
+                //nhưng bình thường ít ai dùng cách này trong c#, nó thường đẩy input vào controller xử lí rồi trả output về view
 </script>
 
 

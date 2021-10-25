@@ -15,7 +15,7 @@ namespace Facebook.Controllers
 {
     public class UsersController : Controller
     {
-        private DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
+        private DemoSMS_OnlienEntities1 db = new DemoSMS_OnlienEntities1();
 
         
 

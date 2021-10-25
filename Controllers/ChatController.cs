@@ -10,7 +10,7 @@ namespace Facebook.Controllers
 {
     public class ChatController : Controller
     {
-        DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
+        DemoSMS_OnlienEntities1 db = new DemoSMS_OnlienEntities1();
         // GET: Chat
         public ActionResult Index()
         {

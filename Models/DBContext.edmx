@@ -31,6 +31,7 @@
           <Property Name="FriendName" Type="nvarchar" MaxLength="50" />
           <Property Name="UserFriend_Id" Type="int" />
           <Property Name="User_Id" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -149,6 +150,7 @@
           <Property Name="FriendName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserFriend_Id" Type="Int32" />
           <Property Name="User_Id" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK__Friend__User_Id__3F466844" FromRole="Friend" ToRole="Users" />
           <NavigationProperty Name="User1" Relationship="Self.FK__Friend__UserFrie__3E52440B" FromRole="Friend" ToRole="Users" />
         </EntityType>
@@ -218,7 +220,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DemoSMS_OnlienEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DemoSMS_OnlienEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ChatBoards" EntityType="Self.ChatBoard" />
           <EntitySet Name="Emojis" EntityType="Self.Emoji" />
           <EntitySet Name="Friends" EntityType="Self.Friend" />
@@ -245,7 +247,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DemoSMS_OnlienModelStoreContainer" CdmEntityContainer="DemoSMS_OnlienEntities">
+        <EntityContainerMapping StorageEntityContainer="DemoSMS_OnlienModelStoreContainer" CdmEntityContainer="DemoSMS_OnlienEntities1">
           <EntitySetMapping Name="ChatBoards">
             <EntityTypeMapping TypeName="DemoSMS_OnlienModel.ChatBoard">
               <MappingFragment StoreEntitySet="ChatBoard">
@@ -273,6 +275,7 @@
                 <ScalarProperty Name="FriendName" ColumnName="FriendName" />
                 <ScalarProperty Name="UserFriend_Id" ColumnName="UserFriend_Id" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

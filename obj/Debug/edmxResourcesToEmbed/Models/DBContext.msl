@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DemoSMS_OnlienModelStoreContainer" CdmEntityContainer="DemoSMS_OnlienEntities">
+  <EntityContainerMapping StorageEntityContainer="DemoSMS_OnlienModelStoreContainer" CdmEntityContainer="DemoSMS_OnlienEntities1">
     <EntitySetMapping Name="ChatBoards">
       <EntityTypeMapping TypeName="DemoSMS_OnlienModel.ChatBoard">
         <MappingFragment StoreEntitySet="ChatBoard">
@@ -28,6 +28,7 @@
           <ScalarProperty Name="FriendName" ColumnName="FriendName" />
           <ScalarProperty Name="UserFriend_Id" ColumnName="UserFriend_Id" />
           <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

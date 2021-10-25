@@ -13,10 +13,10 @@ namespace Facebook.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DemoSMS_OnlienEntities : DbContext
+    public partial class DemoSMS_OnlienEntities1 : DbContext
     {
-        public DemoSMS_OnlienEntities()
-            : base("name=DemoSMS_OnlienEntities")
+        public DemoSMS_OnlienEntities1()
+            : base("name=DemoSMS_OnlienEntities1")
         {
         }
     

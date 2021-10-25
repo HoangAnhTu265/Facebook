@@ -9,7 +9,7 @@ namespace Facebook.Controllers
 {
     public class HomeController : Controller
     {
-        DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
+        DemoSMS_OnlienEntities1 db = new DemoSMS_OnlienEntities1();
         public ActionResult Index()
         {
             return View();

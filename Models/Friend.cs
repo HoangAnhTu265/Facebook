@@ -18,6 +18,7 @@ namespace Facebook.Models
         public string FriendName { get; set; }
         public Nullable<int> UserFriend_Id { get; set; }
         public Nullable<int> User_Id { get; set; }
+        public string Status { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

@@ -176,8 +176,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\DBContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBContext.Context.cs</LastGenOutput>
       <DependentUpon>DBContext.edmx</DependentUpon>
+      <LastGenOutput>DBContext.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\DBContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -234,6 +234,7 @@
     <Content Include="Views\Friends\Edit.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutFriend.cshtml" />
+    <Content Include="Views\Friends\notications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

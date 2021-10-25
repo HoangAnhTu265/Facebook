@@ -13,7 +13,7 @@ namespace Facebook.Controllers
 {
     public class FriendsController : Controller
     {
-        private DemoSMS_OnlienEntities db = new DemoSMS_OnlienEntities();
+        private DemoSMS_OnlienEntities1 db = new DemoSMS_OnlienEntities1();
         static String sql_con = @"Data Source=ADMIN\SQLEXPRESS;Initial Catalog=DemoSMS_Onlien;Integrated Security=True";
         SqlConnection con = new SqlConnection(sql_con);
 
@@ -125,6 +125,36 @@ namespace Facebook.Controllers
             db.Friends.Remove(friend);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult notications()
+        {
+            var fen = db.Friends.ToList();
+            return View(fen.ToList());
+        }
+
+        public String Accept(int User_Id, int UserFriend_Id)
+        {
+            con.Open();
+            string updateSql = "update Friend set Status = 'Accepted' where User_Id = @senderId and UserFriend_Id = @receiverId";
+            SqlCommand command = new SqlCommand(updateSql, con);
+            command.Parameters.AddWithValue("@senderId", User_Id);
+            command.Parameters.AddWithValue("@receiverId", UserFriend_Id);
+
+            command.ExecuteNonQuery();
+            return "abc";
+        }
+
+        public String Decline(int User_Id, int UserFriend_Id)
+        {
+            con.Open();
+            string updateSql = "update Friend set Status = 'Refused' where User_Id = @senderId and UserFriend_Id = @receiverId";
+            SqlCommand command = new SqlCommand(updateSql, con);
+            command.Parameters.AddWithValue("@senderId", User_Id);
+            command.Parameters.AddWithValue("@receiverId", UserFriend_Id);
+
+            command.ExecuteNonQuery();
+            return "abc";
         }
 
         //[HttpPost]

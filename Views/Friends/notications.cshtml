@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Facebook.Models.Friend>
+
+@{
+    Layout = "~/Views/Shared/_LayoutFriend.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>notications</title>
+</head>
+<body>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FriendName)
+            </th>
+            <th>
+                Người gửi @Html.DisplayNameFor(model => model.User_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.User1.UserName)
+                </th>
+                <th></th>*@
+        </tr>
+        @foreach (var item in Model)
+        {
+            if (item.FriendName == Session["UserName"].ToString())
+            {
+                @*<span> đây là item user id @item.User_Id</span>
+                    <br />
+                    <span> đây là session user id @Session["User_Id"]</span>
+                    <br />*@
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FriendName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @if (item.Status == "Accepted")
+                        {
+                            <span>2 bạn đã trở thành bạn bè </span>
+                        }
+                        @if (item.Status == "Refused" || item.Status == "Accepted")
+                        {
+                        <td style="display:none"></td>
+                    }
+                    else
+                    {
+                        <button id="acceptBtn" onclick="accept(@item.User_Id,@item.UserFriend_Id)">Accept</button>
+                        <button id="dislikeBtn" onclick="decline(@item.User_Id,@item.UserFriend_Id)">Decline</button>
+                    }
+                        </td>
+
+
+                    </tr>
+                }
+            }
+
+
+    </table>
+
+    <script>
+        var url = "Friends/Accept";
+        var url2 = "https://localhost:44315/Friends/Accept";
+        function accept(User_Id, UserFriend_Id) {
+            var url4 = url2 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
+            /*alert(url4);*/
+            var r = confirm("Bạn có muốn kết bạn với người này không!");
+            if (r == true) {
+                $.get(url4, function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                    location.reload();
+                });
+            } else {
+
+            }
+        }
+
+        var url3 = "https://localhost:44315/Friends/Decline";
+        function decline(User_Id, UserFriend_Id) {
+            var url4 = url3 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
+            //alert(url4);
+            var r = confirm("Bạn có muốn kết bạn với người này không!");
+            if (r == true) {
+                $.get(url4, function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                    location.reload();
+                });
+            } else {
+
+            }
+
+        }
+    </script>
+
+</body>
+</html>

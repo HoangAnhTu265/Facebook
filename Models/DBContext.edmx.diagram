@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4766067c80da4e0ab97cc86dad40c466" Name="Diagram1">
+      <Diagram DiagramId="5c15ec4535d047d9bed49702ce6f6b6c" Name="Diagram1">
         <EntityTypeShape EntityType="DemoSMS_OnlienModel.ChatBoard" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DemoSMS_OnlienModel.Emoji" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DemoSMS_OnlienModel.Friend" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="DemoSMS_OnlienModel.User" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoSMS_OnlienModel.User" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="DemoSMS_OnlienModel.FK__Emoji__User_Rece__3B75D760" ManuallyRouted="false" />
         <AssociationConnector Association="DemoSMS_OnlienModel.FK__Emoji__User_Send__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="DemoSMS_OnlienModel.FK__Friend__User_Id__3F466844" ManuallyRouted="false" />
