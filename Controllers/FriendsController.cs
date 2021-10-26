@@ -127,6 +127,16 @@ namespace Facebook.Controllers
             return RedirectToAction("Index");
         }
 
+        public String checkBtnAdd(int UserFriend_Id)
+        {
+            con.Open();
+            string sqlCheck = "select * from Friend where Status = 'Accepted' OR Status = 'Refused'";
+
+            SqlCommand command = new SqlCommand(sqlCheck, con);
+            command.ExecuteNonQuery();
+            return "abc";
+        }
+
         public ActionResult notications()
         {
             var fen = db.Friends.ToList();

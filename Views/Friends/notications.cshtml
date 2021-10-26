@@ -91,7 +91,7 @@
         function decline(User_Id, UserFriend_Id) {
             var url4 = url3 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
             //alert(url4);
-            var r = confirm("Bạn có muốn kết bạn với người này không!");
+            var r = confirm("Bạn có muốn từ chối người này không!");
             if (r == true) {
                 $.get(url4, function (data, status) {
                     alert("Data: " + data + "\nStatus: " + status);
@@ -100,7 +100,6 @@
             } else {
 
             }
-
         }
     </script>
 
