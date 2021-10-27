@@ -7,6 +7,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <style>
+        a, a:hover {
+            color: #9d9d9d;
+            text-decoration: none;
+        }
+    </style>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,14 +28,32 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Index", "Index", "Users")</li>
-                    <li>@Html.ActionLink("Chat", "Chat", "Chat")</li>
-                    <li>@Html.ActionLink("Add Friend", "Index", "Friends")</li>
-                    <li>@Html.ActionLink("Notications", "notications", "Friends")</li>
-                    @*<li>
-                        <input type="radio" id="light" onchange="" />
-                        <input type="radio" id="dark" onchange="" />
-                    </li>*@
+                    <li style="margin-top:15px; padding-right: 50px;">
+                        <div>
+                            @Html.ActionLink("Index", "Index", "Users")
+                        </div>
+                    </li>
+
+                    <li style="margin-top:15px ;padding-right: 50px;">
+                        <div>
+                            <i style="color:white" class="fas fa-comment"></i>
+                            @Html.ActionLink("Chat", "Chat", "Chat")
+                        </div>
+                    </li>
+
+                    <li style="margin-top:15px ;padding-right: 50px;">
+                        <div>
+                            <i style="color:white" class="fas fa-user-friends"></i>
+                            @Html.ActionLink("Add Friend", "Index", "Friends")
+                        </div>
+                    </li>
+
+                    <li style="margin-top:15px ;padding-right: 50px;">
+                        <div>
+                            <i style="color:white" class="fas fa-bell"></i>
+                            @Html.ActionLink("Notications", "notications", "Friends")
+                        </div>
+                    </li>
                 </ul>
             </div>
 

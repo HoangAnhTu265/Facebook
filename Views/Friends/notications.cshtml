@@ -15,55 +15,56 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FriendName)
+               Người gửi @Html.DisplayNameFor(model => model.FriendName)
             </th>
             <th>
-                Người gửi @Html.DisplayNameFor(model => model.User_Id)
+                @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.User1.UserName)
-                </th>
-                <th></th>*@
+          
         </tr>
         @foreach (var item in Model)
         {
-            if (item.FriendName == Session["UserName"].ToString())
+            if (item.FriendName == Session["UserName"].ToString() || item.User.UserName == Session["UserName"].ToString())
             {
-                @*<span> đây là item user id @item.User_Id</span>
-                    <br />
-                    <span> đây là session user id @Session["User_Id"]</span>
-                    <br />*@
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FriendName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @if (item.Status == "Accepted")
-                        {
-                            <span>2 bạn đã trở thành bạn bè </span>
-                        }
-                        @if (item.Status == "Refused" || item.Status == "Accepted")
-                        {
-                        <td style="display:none"></td>
-                    }
-                    else
-                    {
-                        <button id="acceptBtn" onclick="accept(@item.User_Id,@item.UserFriend_Id)">Accept</button>
-                        <button id="dislikeBtn" onclick="decline(@item.User_Id,@item.UserFriend_Id)">Decline</button>
-                    }
-                        </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FriendName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @if (item.Status == "Accepted")
+            {
+                <span>2 bạn đã trở thành bạn bè </span>
+            }
+            @if (item.Status == "Refused" || item.Status == "Accepted")
+            {
+            <td style="display:none"></td>
+        }
+        else
+        {
+            if (item.User.UserName == Session["UserName"].ToString())
+            {
+                <td style="display:none"></td>
+            }
+            else
+            {
+                <button id="acceptBtn" onclick="accept(@item.User_Id,@item.UserFriend_Id)">Accept</button>
+                <button id="dislikeBtn" onclick="decline(@item.User_Id,@item.UserFriend_Id)">Decline</button>
+            }
+
+        }
+            </td>
 
 
-                    </tr>
+        </tr>
                 }
             }
 

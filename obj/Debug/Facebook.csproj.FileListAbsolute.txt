@@ -80,4 +80,3 @@ C:\Users\Admin\Desktop\DEMO\Facebook\Facebook\obj\Debug\Facebook.csproj.CoreComp
 C:\Users\Admin\Desktop\DEMO\Facebook\Facebook\obj\Debug\Facebook.csproj.CopyComplete
 C:\Users\Admin\Desktop\DEMO\Facebook\Facebook\obj\Debug\Facebook.dll
 C:\Users\Admin\Desktop\DEMO\Facebook\Facebook\obj\Debug\Facebook.pdb
-C:\Users\Admin\Desktop\DEMO\Facebook\Facebook\obj\Debug\Facebook.csprojAssemblyReference.cache

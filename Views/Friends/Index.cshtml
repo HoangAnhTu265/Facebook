@@ -36,40 +36,42 @@
         }
         else
         {
-            <tr>
-                @*<span> đây là item username @item.UserName</span>
-                    <br />
-                    <span>đây là session @Session["UserName"].ToString()</span>
-                    <br />*@
+<tr>
+    @*<span> đây là item username @item.UserName</span>
+        <br />
+        <span>đây là session @Session["UserName"].ToString()</span>
+        <br />*@
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                @if (item.Gender == true)
-                {
-                    <td>
-                        Male
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Female
-                    </td>
-                }
+    <td>
+        @Html.DisplayFor(modelItem => item.UserName)
+    </td>
+    @if (item.Gender == true)
+    {
+        <td>
+            Male
+        </td>
+    }
+    else
+    {
+        <td>
+            Female
+        </td>
+    }
 
 
 
-                <td id="tdBtn">
+    <td id="tdBtn">
 
-                    <button id="addFriendBtn"  onclick="addFriend(@item.User_Id, @("'" + item.UserName + "'"))">Add Friend</button>
+        <button class="addFriendBtn" onclick="addFriend(@item.User_Id, @("'" + item.UserName + "'"))">Add Friend</button>
 
-                    <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
-                    <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
-                    @Html.ActionLink("Details", "Details", new { id = item.User_Id })
-                </td>
+        <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
+        <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
+        @*@Html.ActionLink("Details", "Details", new { id = item.User_Id })*@
 
-            </tr>
+    </td>
+    
+    
+</tr>
         }
     }
 
@@ -77,15 +79,7 @@
 
 </table>
 <script>
-    var urlCheck = "https://localhost:44315/Friends/checkBtnAdd";
-    function checkBtn(UserFriend_Id) {
-        var url4 = urlCheck + "?UserFriend_Id=" + UserFriend_Id;
-        alert(url4)
-        $.get(url4, function (data, status) {
-            alert("thành công")
-            document.getElementById('addFriendBtn').style.display = "none";
-        });
-    }
+
 
 
     var url = "Friends/Like";
@@ -108,15 +102,20 @@
         //}
     }
     var urlFriend = "https://localhost:44315/Friends/addFriend";
+    var urlCheck = "https://localhost:44315/Friends/checkBtnAdd";
     function addFriend(UserFriend_Id, FriendName) {
-        
+
         alert("hello đây là function addfriend");
-        var url5 = urlFriend + "?UserFriend_Id=" + UserFriend_Id + "&FriendName=" + FriendName;
-        /*alert(url5)*/
+        var url5 = urlFriend + "?UserFriend_Id=" + UserFriend_Id + "&FriendName=" + FriendName;      
+
         $.get(url5, function (data, status) {
             alert("data: " + data + "\nStatus: " + status);
         })
     }
+
+
+
+
 
 </script>
 

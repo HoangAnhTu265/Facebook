@@ -127,15 +127,24 @@ namespace Facebook.Controllers
             return RedirectToAction("Index");
         }
 
-        public String checkBtnAdd(int UserFriend_Id)
-        {
-            con.Open();
-            string sqlCheck = "select * from Friend where Status = 'Accepted' OR Status = 'Refused'";
-
-            SqlCommand command = new SqlCommand(sqlCheck, con);
-            command.ExecuteNonQuery();
-            return "abc";
-        }
+        //public String checkBtnAdd(int UserFriend_Id)
+        //{
+        //    con.Open();
+        //    var a = Session["UserID"];
+        //    //string sqlCheck = "select * from Friend where UserFriend_Id = " + UserFriend_Id + " and User_Id = " + a;
+        //    var checkTrue = db.Friends.Where(s => s.UserFriend_Id == UserFriend_Id && s.User_Id == (int)a).ToList();
+        //    //SqlCommand command = new SqlCommand(checkTrue, con);
+        //    //command.ExecuteNonQuery();
+        //    int b = checkTrue.Count();
+        //    if (checkTrue.Count() > 0 )
+        //    {
+        //        return ViewBag.CheckStatusFriend  = "hai bạn đã kết bạn rồi";
+        //    } else
+        //    {
+        //        return ViewBag.CheckStatusFriend = "hai bạn chưa kết bạn";
+        //    }
+        //    //return "abc";
+        //}
 
         public ActionResult notications()
         {
@@ -145,7 +154,29 @@ namespace Facebook.Controllers
 
         public String Accept(int User_Id, int UserFriend_Id)
         {
+            var a = Session["UserID"];
             con.Open();
+
+            //String sql = "insert into Friend values(@FriendName, @UserFriend_Id, @UserId,@Status)";
+            //SqlCommand command = new SqlCommand(sql, con);
+            //command.Parameters.AddWithValue("@FriendName", FriendName);
+            //command.Parameters.AddWithValue("@UserFriend_Id", UserFriend_Id);
+            //command.Parameters.AddWithValue("@UserId", a);
+            //command.Parameters.AddWithValue("@Status", "Accepted");
+            //command.ExecuteNonQuery();
+            //var name = from c in db.Friends where c.User_Id == User_Id select c;
+
+            //var name = Session;
+
+            //string insertSql = "insert into Friend values(@FriendName, @UserFriend_Id, @UserId,@Status)";
+            //SqlCommand command2 = new SqlCommand(insertSql, con);
+            //command2.Parameters.AddWithValue("@FriendName", UserName);
+            //command2.Parameters.AddWithValue("@UserFriend_Id", UserFriend_Id);
+            //command2.Parameters.AddWithValue("@UserId", a);
+            //command2.Parameters.AddWithValue("@Status", "Accepted");
+            //command2.ExecuteNonQuery();
+
+
             string updateSql = "update Friend set Status = 'Accepted' where User_Id = @senderId and UserFriend_Id = @receiverId";
             SqlCommand command = new SqlCommand(updateSql, con);
             command.Parameters.AddWithValue("@senderId", User_Id);
@@ -158,6 +189,7 @@ namespace Facebook.Controllers
         public String Decline(int User_Id, int UserFriend_Id)
         {
             con.Open();
+
             string updateSql = "update Friend set Status = 'Refused' where User_Id = @senderId and UserFriend_Id = @receiverId";
             SqlCommand command = new SqlCommand(updateSql, con);
             command.Parameters.AddWithValue("@senderId", User_Id);
@@ -173,13 +205,35 @@ namespace Facebook.Controllers
             con.Open();
             var a = Session["UserID"];
 
-            String sql = "insert into Friend values(@FriendName, @UserFriend_Id, @UserId,@Status)";
-            SqlCommand command = new SqlCommand(sql, con);
-            command.Parameters.AddWithValue("@FriendName", FriendName);
-            command.Parameters.AddWithValue("@UserFriend_Id", UserFriend_Id);
-            command.Parameters.AddWithValue("@UserId", a);
-            command.Parameters.AddWithValue("@Status", "null");
-            command.ExecuteNonQuery();
+            string acceptBtn = null;
+            string dislikeBtn = null;
+
+            //check xem đã kết bạn chưa
+            var checkTrue = db.Friends.Where(s => s.UserFriend_Id == UserFriend_Id && s.User_Id == (int)a).ToList();
+
+            //để nguời nhân đc thông báo không gửi lại thông báo cho nguời gửi nữa 
+            var checkTrue2 = db.Friends.Where(s => s.UserFriend_Id == (int)a && s.User_Id == UserFriend_Id).ToList();
+
+            if (checkTrue.Count() > 0)
+            {
+                ViewBag.check = "bạn và người này đã kết bạn rồi";
+            }
+            else if (checkTrue2.Count() > 0)
+            {
+                ViewBag.check = "bạn và người này đã kết bạn rồi";
+            }
+            else
+            {
+                String sql = "insert into Friend values(@FriendName, @UserFriend_Id, @UserId,@Status)";
+                SqlCommand command = new SqlCommand(sql, con);
+                command.Parameters.AddWithValue("@FriendName", FriendName);
+                command.Parameters.AddWithValue("@UserFriend_Id", UserFriend_Id);
+                command.Parameters.AddWithValue("@UserId", a);
+                command.Parameters.AddWithValue("@Status", "null");
+                command.ExecuteNonQuery();
+            }
+
+            
 
             return "abc";
         }
