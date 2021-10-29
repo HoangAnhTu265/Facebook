@@ -60,9 +60,10 @@ namespace Facebook.Controllers
 
             List<User> listUserChuaKetBan = new List<User>();
 
-
+            List<int> idUserFriend = new List<int>();
             foreach (var f in db.Friends)
             {
+                idUserFriend.Add((int)f.UserFriend_Id);
                 if (f.Status == null || f.Status.Contains("null") && f.User_Id == (int)id)
                 {
                     
@@ -79,12 +80,24 @@ namespace Facebook.Controllers
             }
             int count1 = idNhungNguoiDaDongYKetBan.Count();
             int count2 = idNhungNguoiDangyeuCauKetBan.Count();
-            int count3 = 0;
+            int count3 = idUserFriend.Count();
         
+            //foreach(var i in idUserFriend) // chứa id userfriend , hiện tại đang count = 14
+            //{
+            //    foreach(var j in idNhungNguoiDaDongYKetBan) // chứa id của những người đã đồng ý kết bạn , hiện count = 3 đăng nhập bằng nick tuan
+            //    {
+            //        if (idUserFriend.Contains(j) && ) {
+
+            //        }
+            //    }
+                
+            //}
+
             foreach(var u in db.Users)
             {
-
-                if(!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)))
+                
+                //if(!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)) && !(idNhungNguoiDangyeuCauKetBan.Contains(u.User_Id)))
+                if (!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)))
                 {
                     listUserChuaKetBan.Add(u);
                 }
