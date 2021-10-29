@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -16,6 +17,13 @@ namespace Facebook.Controllers
     public class UsersController : Controller
     {
         private DemoSMS_OnlienEntities1 db = new DemoSMS_OnlienEntities1();
+
+        
+
+        
+        
+
+       
 
         
 

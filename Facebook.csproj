@@ -159,6 +159,7 @@
     <Compile Include="Models\Friend.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
@@ -235,6 +236,8 @@
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutFriend.cshtml" />
     <Content Include="Views\Friends\notications.cshtml" />
+    <Content Include="Views\Users\ForgotPassword.cshtml" />
+    <Content Include="Views\Users\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

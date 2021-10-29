@@ -20,9 +20,142 @@ namespace Facebook.Controllers
         // GET: Friends
         public ActionResult Index()
         {
-            var user = db.Users.ToList();
-            return View(user.ToList());
+            var users = db.Users.ToList();
+           
+            var id = Session["UserID"];
+            
+
+            //đây là  những người bạn và những người yêu cầu kết bạn
+            //List<int> sql3 = db.Friends.Where(f => f.User_Id == (int)id).Select(f => f.Friend_Id).ToList();
+
+            var sql3 = db.Friends.Where(f => f.User_Id == (int)id).ToList();
+
+            var sqlUser = db.Users.ToList();
+            var sqlFriend = db.Friends.ToList();
+           // lấy id của những người bạn cho vào cái list
+            List<int> listIdFriend = new List<int>();
+            List<int> listIdUserFriend = new List<int>();
+            List<User> listUser_ChuaAddFriend = new List<User>();
+
+            List<int> idNhungNguoiDangyeuCauKetBan = new List<int>();
+            List<int> idNhungNguoiDaDongYKetBan = new List<int>();
+            List<int> listNhungNguoiTuChoiKetBan = new List<int>();
+            // list int lấy tất cả thằng đã là friend add vào list
+            // foreach 
+            //foreach(var f in sql3)
+            //{
+            //    idFriend.Add((int)f.UserFriend_Id);
+            //    idFriend.Add((int)f.User_Id);
+            //} 
+            // lấy ở trong bảng user lấy id của những thằng đã là bạn gán vào một biến nào đấy
+            // lấy ở trong bảng friend lấy tất cả ngoại trừ những thằng đã có cái biến kia 
+            //var sql4 = db.Friends.Where()
+
+            //var userUnfriend = db.Users.ToList();
+            //foreach (int a in sql3)
+            //{
+            //     userUnfriend = db.Users.Where(u => u.User_Id != a).ToList();
+            //}
+
+
+            List<User> listUserChuaKetBan = new List<User>();
+
+
+            foreach (var f in db.Friends)
+            {
+                if (f.Status == null || f.Status.Contains("null") && f.User_Id == (int)id)
+                {
+                    
+                    idNhungNguoiDangyeuCauKetBan.Add((int)f.UserFriend_Id);
+                }
+                else if (f.Status.Contains("Accepted") && f.User_Id == (int)id)
+                    {
+                    idNhungNguoiDaDongYKetBan.Add((int)f.UserFriend_Id);
+                }
+                else if(f.User_Id == (int)id)
+                {
+                    listNhungNguoiTuChoiKetBan.Add((int)f.UserFriend_Id);
+                }
+            }
+            int count1 = idNhungNguoiDaDongYKetBan.Count();
+            int count2 = idNhungNguoiDangyeuCauKetBan.Count();
+            int count3 = 0;
+        
+            foreach(var u in db.Users)
+            {
+
+                if(!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)))
+                {
+                    listUserChuaKetBan.Add(u);
+                }
+                 else
+                {
+                    //listUserChuaKetBan.Add(u);
+                }
+            }
+            return View(listUserChuaKetBan);
         }
+        //var sqlGet = db.Users.Where(s => s.User_Id != f.UserFriend_Id).ToList();
+        //var sqlGet = db.Users.Where(s => s.User_Id != f.UserFriend_Id).ToList();
+        //var sqlGet2 = db.Users.Where(s => s.Friends.UserFriend_Id != f.UserFriend_Id).ToList();
+        //if (f.User_Id != (int)id && idFriend.Contains(f.User_Id))
+        //{
+        //    listUser_ChuaAddFriend.Add(f);
+        //}
+        //foreach(var b in sqlGet)
+        //{
+
+        //    if(b.User_Id == f.UserFriend_Id)
+        //    {
+        //        continue;
+        //    } 
+        //        listUser_ChuaAddFriend.Add(b);
+
+
+        //}
+        //foreach (var b in sqlGet)
+        //foreach (var b in sqlUser) // lấy tất cả user
+        //{
+
+        //    if (b.User_Id == f.UserFriend_Id)
+        //    {
+        //        c = false;
+        //        continue;
+        //    }
+        //    else
+        //    {
+        //        listUser_ChuaAddFriend.Add(b);
+        //        c = true;
+        //    }
+        //}
+
+        //foreach(var i in listUser_ChuaAddFriend)
+        //{
+        //    if()
+        //}
+
+
+        //List<Friend> listUser_ChuaAddFriend = new List<Friend>();
+
+        //lấy danh sách những người có id không nằm trong list id người bạn và chính mình
+        //foreach (var u in db.Users)
+        //{
+        //    //if (u.User_Id != (int)id && !idFriend.Contains(u.User_Id))
+        //    //{
+        //    //    listUser_ChuaAddFriend.Add(u);
+        //    //}
+        //    if (u.User_Id != (int)id && idFriend.Contains(u.User_Id) && idFriend.Contains((int)u.Friend.UserFriend_Id))
+        //    {
+        //        //listUser_ChuaAddFriend.Add(u);
+        //    } else
+        //    {
+        //        listUser_ChuaAddFriend.Add(u);
+        //    }
+        //}
+        //}
+
+
+
 
         // GET: Friends/Details/5
         public ActionResult Details(int? id)
@@ -136,10 +269,11 @@ namespace Facebook.Controllers
         //    //SqlCommand command = new SqlCommand(checkTrue, con);
         //    //command.ExecuteNonQuery();
         //    int b = checkTrue.Count();
-        //    if (checkTrue.Count() > 0 )
+        //    if (checkTrue.Count() > 0)
         //    {
-        //        return ViewBag.CheckStatusFriend  = "hai bạn đã kết bạn rồi";
-        //    } else
+        //        return ViewBag.CheckStatusFriend = "hai bạn đã kết bạn rồi";
+        //    }
+        //    else
         //    {
         //        return ViewBag.CheckStatusFriend = "hai bạn chưa kết bạn";
         //    }
