@@ -28,11 +28,12 @@ namespace Facebook.Controllers
             //đây là  những người bạn và những người yêu cầu kết bạn
             //List<int> sql3 = db.Friends.Where(f => f.User_Id == (int)id).Select(f => f.Friend_Id).ToList();
 
-            var sql3 = db.Friends.Where(f => f.User_Id == (int)id).ToList();
+            //var sql3 = db.Friends.Where(f => f.User_Id == (int)id).ToList();
 
             var sqlUser = db.Users.ToList();
             var sqlFriend = db.Friends.ToList();
-           // lấy id của những người bạn cho vào cái list
+            
+
             List<int> listIdFriend = new List<int>();
             List<int> listIdUserFriend = new List<int>();
             List<User> listUser_ChuaAddFriend = new List<User>();
@@ -40,34 +41,19 @@ namespace Facebook.Controllers
             List<int> idNhungNguoiDangyeuCauKetBan = new List<int>();
             List<int> idNhungNguoiDaDongYKetBan = new List<int>();
             List<int> listNhungNguoiTuChoiKetBan = new List<int>();
-            // list int lấy tất cả thằng đã là friend add vào list
-            // foreach 
-            //foreach(var f in sql3)
-            //{
-            //    idFriend.Add((int)f.UserFriend_Id);
-            //    idFriend.Add((int)f.User_Id);
-            //} 
-            // lấy ở trong bảng user lấy id của những thằng đã là bạn gán vào một biến nào đấy
-            // lấy ở trong bảng friend lấy tất cả ngoại trừ những thằng đã có cái biến kia 
-            //var sql4 = db.Friends.Where()
-
-            //var userUnfriend = db.Users.ToList();
-            //foreach (int a in sql3)
-            //{
-            //     userUnfriend = db.Users.Where(u => u.User_Id != a).ToList();
-            //}
-
 
             List<User> listUserChuaKetBan = new List<User>();
 
             List<int> idUserFriend = new List<int>();
+            List<int> listUserId = new List<int>();
             foreach (var f in db.Friends)
             {
                 idUserFriend.Add((int)f.UserFriend_Id);
+                listUserId.Add((int)f.User_Id);
                 if (f.Status == null || f.Status.Contains("null") && f.User_Id == (int)id)
                 {
-                    
                     idNhungNguoiDangyeuCauKetBan.Add((int)f.UserFriend_Id);
+                   
                 }
                 else if (f.Status.Contains("Accepted") && f.User_Id == (int)id)
                     {
@@ -81,23 +67,13 @@ namespace Facebook.Controllers
             int count1 = idNhungNguoiDaDongYKetBan.Count();
             int count2 = idNhungNguoiDangyeuCauKetBan.Count();
             int count3 = idUserFriend.Count();
-        
-            //foreach(var i in idUserFriend) // chứa id userfriend , hiện tại đang count = 14
-            //{
-            //    foreach(var j in idNhungNguoiDaDongYKetBan) // chứa id của những người đã đồng ý kết bạn , hiện count = 3 đăng nhập bằng nick tuan
-            //    {
-            //        if (idUserFriend.Contains(j) && ) {
-
-            //        }
-            //    }
                 
-            //}
-
             foreach(var u in db.Users)
-            {
+            { 
                 
+                var sql = db.Friends.Where(s => s.User_Id == (int)id && s.UserFriend_Id == u.User_Id || s.User_Id == u.User_Id && s.UserFriend_Id == (int)id);
                 //if(!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)) && !(idNhungNguoiDangyeuCauKetBan.Contains(u.User_Id)))
-                if (!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)))
+                if (!(idNhungNguoiDaDongYKetBan.Contains(u.User_Id)) && !(sql.Count() > 0))
                 {
                     listUserChuaKetBan.Add(u);
                 }

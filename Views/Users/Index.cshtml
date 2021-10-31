@@ -1,38 +1,199 @@
 ﻿@model IEnumerable<Facebook.Models.User>
 
 @{
-    Layout = "~/Views/Shared/_LayoutFriend.cshtml";
+    Layout = null;
 }
 
 <!DOCTYPE html>
 
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidebar {
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+        .sidebar a {
+            display: block;
+            color: black;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+            .sidebar a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+
+            .sidebar a:hover:not(.active) {
+                background-color: #555;
+                color: white;
+            }
+
+    div.content {
+        margin-left: 200px;
+        padding: 1px 16px;
+        height: 1000px;
+    }
+
+    .btn {
+        border: none;
+        color: white;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .success {
+        background-color: #04AA6D;
+    }
+        /* Green */
+        .success:hover {
+            background-color: #46a049;
+        }
+</style>
+<div class="sidebar">
+    <a class="active">@Html.ActionLink("Index", "Index", "Users")</a>
+    @Html.ActionLink("Chat", "Chat", "Chat")
+    @Html.ActionLink("Add Friend", "Index", "Friends")
+
+</div>
+
 
 <head>
+    @*<link href="@Url.Content("~/Content/Index_User.css")" rel="stylesheet" type="text/css" />*@
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./social-media-icons.css">
+    <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
+
+</head>
+<div class="content">
     <h2>Index</h2>
+
     <div class="row justify-content-md-start">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Welcome
-                </div>
-                <div class="card-body">
+            <div>
+                <div>
                     @if (Session["FullName"] != null)
                     {
-                        
-                        <p>Name: @Session["FullName"].ToString()</p>
-                        <p>Gender: @Session["Gender"].ToString()</p>
-                        <p>WorkStatus: @Session["WorkStatus"].ToString()</p>
-                        <p>Email: @Session["Email"].ToString()</p>
-                        <p>Address: @Session["Address"].ToString()</p>
-                        <p>DOB: @Session["DOB"].ToString()</p>
-                        <a href="@Url.Action("Logout","Users")" class="btn btn-warning">Logout</a>
+                        <table>
+                            <tr>
+                                <th>Tên </th>
+                                <th>Giới tính</th>
+                                <th>Công việc</th>
+                                <th>Email</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày sinh</th>
+                            </tr>
+                            <tr>
+                                <td> @Session["FullName"].ToString()</td>
+                                <td> @Session["Gender"].ToString()</td>
+                                <td> @Session["WorkStatus"].ToString()</td>
+                                <td> @Session["Email"].ToString()</td>
+                                <td> @Session["Address"].ToString()</td>
+                                <td> @Session["DOB"].ToString()</td>
+                            </tr>
+                        </table>
+                        @*<p>Name: @Session["FullName"].ToString()</p>
+                            <p>Gender: @Session["Gender"].ToString()</p>
+                            <p>WorkStatus: @Session["WorkStatus"].ToString()</p>
+                            <p>Email: @Session["Email"].ToString()</p>
+                            <p>Address: @Session["Address"].ToString()</p>
+                            <p>DOB: @Session["DOB"].ToString()</p>*@
+                        <br />
+                        <a href="@Url.Action("Logout","Users")" class="btn success">Logout</a>
                     }
                 </div>
             </div>
 
         </div>
     </div>
+</div>
+<footer class="footer-section">
+    <div class="container">
+        <div class="footer-cta pt-5 pb-5">
+            <div class="row">
+                <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="cta-text">
+                            <h4>Find us</h4>
+                            <span>Budhana Road Khatauli, Muzaffarnagar, UP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                        <i class="fas fa-phone"></i>
+                        <div class="cta-text">
+                            <h4>Call us</h4>
+                            <span>9528337965</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                        <i class="far fa-envelope-open"></i>
+                        <div class="cta-text">
+                            <h4>Mail us</h4>
+                            <span>mail@info.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                    <div class="copyright-text">
+                        <p>Copyright &copy; 2021, All Right Reserved <a href="#">Ifam</a></p>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                    <div class="footer-menu">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Policy</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

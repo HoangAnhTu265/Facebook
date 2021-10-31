@@ -1,108 +1,189 @@
 ﻿@model IEnumerable<Facebook.Models.Friend>
 
 @{
-    Layout = "~/Views/Shared/_LayoutFriend.cshtml";
+    Layout = null;
 }
 
 <!DOCTYPE html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
 
-<html>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidebar {
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+        .sidebar a {
+            display: block;
+            color: black;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+            .sidebar a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+
+            .sidebar a:hover:not(.active) {
+                background-color: #555;
+                color: white;
+            }
+
+    div.content {
+        margin-left: 200px;
+        padding: 1px 16px;
+        height: 1000px;
+    }
+
+
+
+    /* Green */
+</style>
+<div class="sidebar">
+    <a class="active">@Html.ActionLink("Index", "Index", "Users")</a>
+    @Html.ActionLink("Chat", "Chat", "Chat")
+    @Html.ActionLink("Add Friend", "Index", "Friends")
+    @Html.ActionLink("Notications", "notications", "Friends")
+</div>
 <head>
-    <meta name="viewport" content="width=device-width" />
+
+
     <title>notications</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./social-media-icons.css">
+    <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <table class="table">
-        <tr>
-            <th>
-               Người gửi @Html.DisplayNameFor(model => model.FriendName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-          
-        </tr>
-        @foreach (var item in Model)
-        {
-            if (item.FriendName == Session["UserName"].ToString() || item.User.UserName == Session["UserName"].ToString())
-            {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FriendName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @if (item.Status == "Accepted")
-            {
-                <span>2 bạn đã trở thành bạn bè </span>
-            }
-            @if (item.Status == "Refused" || item.Status == "Accepted")
-            {
-            <td style="display:none"></td>
-        }
-        else
-        {
-            if (item.User.UserName == Session["UserName"].ToString())
-            {
-                <td style="display:none"></td>
-            }
-            else
-            {
-                <button id="acceptBtn" onclick="accept(@item.User_Id,@item.UserFriend_Id)">Accept</button>
-                <button id="dislikeBtn" onclick="decline(@item.User_Id,@item.UserFriend_Id)">Decline</button>
-            }
+<div class="content">
+    <div class="haha">
+        <table class="table">
+            <tr>
+                <th>
+                    Người gửi 
+                </th>
+                <th>
+                    Người nhận
+                </th>
+                <th>
+                   Trạng thái bạn bè
+                </th>
 
-        }
-            </td>
+            </tr>
+            @foreach (var item in Model)
+            {
+                if (item.FriendName == Session["UserName"].ToString() || item.User.UserName == Session["UserName"].ToString())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FriendName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @if (item.Status == "Accepted")
+                            {
+                                <span>2 bạn đã trở thành bạn bè </span>
+                            }
+                            @if (item.Status == "Refused" || item.Status == "Accepted")
+                            {
+                            <td style="display:none"></td>
+                        }
+                        else
+                        {
+                            if (item.User.UserName == Session["UserName"].ToString())
+                            {
+                                <td style="display:none"></td>
+                            }
+                            else
+                            {
+                                <button id="acceptBtn" onclick="accept(@item.User_Id,@item.UserFriend_Id)">Accept</button>
+                                <button id="dislikeBtn" onclick="decline(@item.User_Id,@item.UserFriend_Id)">Decline</button>
+                            }
+
+                        }
+                            </td>
 
 
-        </tr>
+                        </tr>
+                    }
+                }
+
+
+        </table>
+
+        <script>
+            var url = "Friends/Accept";
+            var url2 = "https://localhost:44315/Friends/Accept";
+            function accept(User_Id, UserFriend_Id) {
+                var url4 = url2 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
+                /*alert(url4);*/
+                var r = confirm("Bạn có muốn kết bạn với người này không!");
+                if (r == true) {
+                    $.get(url4, function (data, status) {
+                        alert("Data: " + data + "\nStatus: " + status);
+                        location.reload();
+                    });
+                } else {
+
                 }
             }
 
+            var url3 = "https://localhost:44315/Friends/Decline";
+            function decline(User_Id, UserFriend_Id) {
+                var url4 = url3 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
+                //alert(url4);
+                var r = confirm("Bạn có muốn từ chối người này không!");
+                if (r == true) {
+                    $.get(url4, function (data, status) {
+                        alert("Data: " + data + "\nStatus: " + status);
+                        location.reload();
+                    });
+                } else {
 
-    </table>
-
-    <script>
-        var url = "Friends/Accept";
-        var url2 = "https://localhost:44315/Friends/Accept";
-        function accept(User_Id, UserFriend_Id) {
-            var url4 = url2 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
-            /*alert(url4);*/
-            var r = confirm("Bạn có muốn kết bạn với người này không!");
-            if (r == true) {
-                $.get(url4, function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
-                    location.reload();
-                });
-            } else {
-
+                }
             }
-        }
+        </script>
+    </div>
+</div>
 
-        var url3 = "https://localhost:44315/Friends/Decline";
-        function decline(User_Id, UserFriend_Id) {
-            var url4 = url3 + "?User_Id=" + User_Id + "&UserFriend_Id=" + UserFriend_Id;
-            //alert(url4);
-            var r = confirm("Bạn có muốn từ chối người này không!");
-            if (r == true) {
-                $.get(url4, function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
-                    location.reload();
-                });
-            } else {
-
-            }
-        }
-    </script>
-
-</body>
-</html>

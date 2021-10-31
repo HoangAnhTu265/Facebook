@@ -1,124 +1,431 @@
 ﻿@model IEnumerable<Facebook.Models.User>
 
-
 @{
-    Layout = "~/Views/Shared/_LayoutFriend.cshtml";
+    //Layout = "~/Views/Shared/_LayoutFriend.cshtml";
+    Layout = null;
 }
 
 <!DOCTYPE html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@*@RenderSection("scripts", required: false)*@
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidebar {
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+        .sidebar a {
+            display: block;
+            color: black;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+            .sidebar a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+
+            .sidebar a:hover:not(.active) {
+                background-color: #555;
+                color: white;
+            }
+
+    div.content {
+        margin-left: 200px;
+        padding: 1px 16px;
+        height: 1000px;
+    }
+
+    .contact-box {
+        background: -webkit-linear-gradient(to right, #414345, #232526); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        margin-left: -6px;
+        width: 100.9%;
+        height: 320px;
+        margin-top: 450px;
+        padding-left: 50px;
+    }
+
+        .contact-box p {
+            padding-top: 20px;
+            font-size: 19px;
+            color: #fff;
+        }
+
+    .contact-header {
+        position: absolute;
+    }
+
+    .contact-box .social {
+        position: absolute;
+        padding-top: 8px;
+        margin-left: 70px;
+    }
+
+    .contact-box h1 {
+        color: #fff;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .contact-box .social1 {
+        position: absolute;
+        padding-top: 8px;
+        margin-left: 110px;
+    }
+
+    ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .footer-section {
+        background: #151414;
+        position: relative;
+    }
+
+    .footer-cta {
+        border-bottom: 1px solid #373636;
+    }
+
+    .single-cta i {
+        color: white;
+        font-size: 30px;
+        float: left;
+        margin-top: 8px;
+    }
+
+    .cta-text {
+        padding-left: 15px;
+        display: inline-block;
+    }
+
+        .cta-text h4 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .cta-text span {
+            color: #757575;
+            font-size: 15px;
+        }
+
+    .footer-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-pattern img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 330px;
+        background-size: cover;
+        background-position: 100% 100%;
+    }
+
+    .footer-logo {
+        margin-bottom: 30px;
+    }
+
+        .footer-logo img {
+            max-width: 200px;
+        }
+
+    .footer-text p {
+        margin-bottom: 14px;
+        font-size: 14px;
+        color: #7e7e7e;
+        line-height: 28px;
+    }
+
+    .footer-social-icon span {
+        color: #fff;
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .footer-social-icon a {
+        color: #fff;
+        font-size: 16px;
+        margin-right: 15px;
+    }
+
+    .footer-social-icon i {
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        line-height: 38px;
+        border-radius: 50%;
+    }
+
+    /* .facebook-bg{
+      background: white;
+    }
+    .twitter-bg{
+      background: white;
+    }
+    .google-bg{
+      background: white;
+    }
+    .instagram-bg{
+      background: white;
+    } */
+    .footer-widget-heading h3 {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+        .footer-widget-heading h3::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            height: 2px;
+            width: 50px;
+            background: white;
+        }
+
+    .footer-widget ul li {
+        display: inline-block;
+        float: left;
+        width: 50%;
+        margin-bottom: 12px;
+    }
+
+        .footer-widget ul li a:hover {
+            color: white;
+        }
+
+        .footer-widget ul li a {
+            color: #878787;
+            text-transform: capitalize;
+        }
+
+    .subscribe-form {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .subscribe-form input {
+            width: 100%;
+            padding: 14px 28px;
+            background: #2E2E2E;
+            border: 1px solid #2E2E2E;
+            color: #fff;
+        }
+
+        .subscribe-form button {
+            position: absolute;
+            right: 0;
+            background: white;
+            padding: 13px 20px;
+            border: 1px solid white;
+            top: 0;
+        }
+
+            .subscribe-form button i {
+                color: #151414;
+                font-size: 22px;
+                transform: rotate(-6deg);
+            }
+
+    .copyright-area {
+        background: #202020;
+        padding: 25px 0;
+    }
+
+    .copyright-text p {
+        margin: 0;
+        font-size: 14px;
+        color: #878787;
+    }
+
+        .copyright-text p a {
+            color: #ff5e14;
+        }
+
+    .footer-menu li {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+        .footer-menu li:hover a {
+            color: #ff5e14;
+        }
+
+        .footer-menu li a {
+            font-size: 14px;
+            color: #878787;
+        }
 
 
+    /* Green */
+</style>
+<div class="sidebar">
+    <a class="active">@Html.ActionLink("Index", "Index", "Users")</a>
+    @Html.ActionLink("Chat", "Chat", "Chat")
+    @Html.ActionLink("Add Friend", "Index", "Friends")
+    @Html.ActionLink("Notications", "notications", "Friends")
+</div>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./social-media-icons.css">
+    <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
+
     <title>Index</title>
 </head>
 
+<div class="content">
+    <div class="haha">
+        <table class="table">
+            <tr>
+                <th>
+                    Tên người dùng
+                </th>
+                <th>
+                    Giới tính
+                </th>
+            </tr>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.User1.UserName)
-            </th>
-            <th></th>*@
-    </tr>
+            @foreach (var item in Model)
+            {
+                if (item.UserName == Session["UserName"].ToString())
+                {
+                    <tr style="display:none"></tr>
+                }
+                else
+                {
+                    <tr>
+                        @*<span> đây là item username @item.UserName</span>
+                            <br />
+                            <span>đây là session @Session["UserName"].ToString()</span>
+                            <br />*@
 
-    @foreach (var item in Model)
-    {
-        if (item.UserName == Session["UserName"].ToString())
-        {
-            <tr style="display:none"></tr>
-        }
-        else
-        {
-<tr>
-    @*<span> đây là item username @item.UserName</span>
-        <br />
-        <span>đây là session @Session["UserName"].ToString()</span>
-        <br />*@
-
-    <td>
-        @Html.DisplayFor(modelItem => item.UserName)
-    </td>
-    @if (item.Gender == true)
-    {
-        <td>
-            Male
-        </td>
-    }
-    else
-    {
-        <td>
-            Female
-        </td>
-    }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        @if (item.Gender == true)
+                        {
+                            <td>
+                                Male
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Female
+                            </td>
+                        }
 
 
 
-    <td id="tdBtn">
+                        <td id="tdBtn">
 
-        <button class="addFriendBtn" onclick="addFriend(@item.User_Id, @("'" + item.UserName + "'"))">Add Friend</button>
+                            <button class="addFriendBtn" onclick="addFriend(@item.User_Id, @("'" + item.UserName + "'"))">Add Friend</button>
 
-        <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
-        <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
-        @*@Html.ActionLink("Details", "Details", new { id = item.User_Id })*@
+                            <button class="btnLike" id="likeBtn" onclick="emoji2(@item.User_Id,1)">Like</button>
+                            <button id="dislikeBtn" onclick="emoji2(@item.User_Id,0)">Dislike</button>
+                            @*@Html.ActionLink("Details", "Details", new { id = item.User_Id })*@
 
-    </td>
-    
-    
-</tr>
-        }
-    }
+                        </td>
 
 
-
-</table>
-<script>
+                    </tr>
+                }
+            }
 
 
 
-    var url = "Friends/Like";
-    var url2 = "https://localhost:44315/Friends/Like";
-    function emoji2(idLiked, Status) {
+        </table>
+        <script>
 
-        var ma = $("#mId").val();
-        /*alert("data là " + ma);*/
-        var url4 = url2 + "?idLiked=" + idLiked + "&Status=" + Status;
 
-        alert(url4);
-        $.get(url4, function (data, status) {
-            /*alert("Data: " + data + "\nStatus: " + status);*/
-        });
 
-        //change color button
-        //var x = document.getElementsByClassName('btnLike').style.backgroundColor = "blue";
-        //for (var i = 0; i < x.length; i++) {
-        //    x[i].style.backgroundColor = "#205e7a";
-        //}
-    }
-    var urlFriend = "https://localhost:44315/Friends/addFriend";
-    var urlCheck = "https://localhost:44315/Friends/checkBtnAdd";
-    function addFriend(UserFriend_Id, FriendName) {
+            var url = "Friends/Like";
+            var url2 = "https://localhost:44315/Friends/Like";
+            function emoji2(idLiked, Status) {
+                alert("Bạn đã react người này")
+                /*var ma = $("#mId").val();*/
+                /*alert("data là " + ma);*/
+                var url4 = url2 + "?idLiked=" + idLiked + "&Status=" + Status;
+                /*debugger*/
+                alert(url4);
+                $.get(url4, function (data, status) {
+                    /*alert("Data: " + data + "\nStatus: " + status);*/
+                });
 
-        alert("hello đây là function addfriend");
-        var url5 = urlFriend + "?UserFriend_Id=" + UserFriend_Id + "&FriendName=" + FriendName;      
+                //change color button
+                //var x = document.getElementsByClassName('btnLike').style.backgroundColor = "blue";
+                //for (var i = 0; i < x.length; i++) {
+                //    x[i].style.backgroundColor = "#205e7a";
+                //}
+            }
+            var urlFriend = "https://localhost:44315/Friends/addFriend";
+            var urlCheck = "https://localhost:44315/Friends/checkBtnAdd";
+            function addFriend(UserFriend_Id, FriendName) {
 
-        $.get(url5, function (data, status) {
-            alert("data: " + data + "\nStatus: " + status);
-        })
-    }
+                alert("hello đây là function addfriend");
+                var url5 = urlFriend + "?UserFriend_Id=" + UserFriend_Id + "&FriendName=" + FriendName;
+
+                $.get(url5, function (data, status) {
+                    alert("data: " + data + "\nStatus: " + status);
+                })
+            }
 
 
 
 
 
-</script>
-
+        </script>
+    </div>
+</div>
 
 
 
